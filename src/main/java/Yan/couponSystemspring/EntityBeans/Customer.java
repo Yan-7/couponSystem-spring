@@ -13,7 +13,6 @@ import java.util.ArrayList;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Component
 @EqualsAndHashCode(of = "id" )
 @Entity
 public class Customer {
