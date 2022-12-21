@@ -1,7 +1,10 @@
-package Yan.couponSystemspring.exceptions;
+package Yan.Coupons2.exceptions;
 
-public class CouponsException extends  Exception {
+public class CouponsException extends  RuntimeException {
+
+
     public CouponsException() {
+        super();
     }
 
     public CouponsException(String message) {
@@ -16,7 +19,5 @@ public class CouponsException extends  Exception {
         super(cause);
     }
 
-    public CouponsException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
+
 }

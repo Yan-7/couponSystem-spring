@@ -1,4 +1,4 @@
-package Yan.couponSystemspring.EntityBeans;
+package Yan.Coupons2.EntityBeans;
 
 public enum Category {
 

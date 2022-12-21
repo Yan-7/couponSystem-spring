@@ -1,8 +1,8 @@
-package Yan.couponSystemspring.services;
+package Yan.Coupons2.services;
 
-import Yan.couponSystemspring.Repostiories.CompanyRepository;
-import Yan.couponSystemspring.Repostiories.CouponRepository;
-import Yan.couponSystemspring.Repostiories.CustomerRepository;
+import Yan.Coupons2.Repostiories.CompanyRepository;
+import Yan.Coupons2.Repostiories.CouponRepository;
+import Yan.Coupons2.Repostiories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
@@ -19,7 +19,7 @@ public abstract class ClientService {
     @Autowired
     public CouponRepository couponRepository;
 
-    public boolean login(String email, String password) throws SQLException,InterruptedException {
+    public boolean login(String email, String password){
         return true;
     }
 }

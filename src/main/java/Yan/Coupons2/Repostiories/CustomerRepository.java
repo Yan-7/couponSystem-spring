@@ -1,6 +1,6 @@
-package Yan.couponSystemspring.Repostiories;
+package Yan.Coupons2.Repostiories;
 
-import Yan.couponSystemspring.EntityBeans.Customer;
+import Yan.Coupons2.EntityBeans.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package Yan.couponSystemspring.jobDaily;
+package Yan.Coupons2.jobDaily;
 
 public class CouponExpireDaily implements Runnable {
 
