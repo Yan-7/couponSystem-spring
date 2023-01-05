@@ -8,12 +8,14 @@ import Yan.Coupons2.Repostiories.CustomerRepository;
 import Yan.Coupons2.exceptions.CouponsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class AdminService extends ClientService {
 
     private final static String email = "admin@admin.com";
@@ -44,6 +46,7 @@ public class AdminService extends ClientService {
             System.out.println("company: " + company.getName() + " added to database");
             System.out.println();
         } else {
+            //throw
             System.out.println("cannot add company " + company.getName() + " ,it's already exist in the system");
             System.out.println();
         }

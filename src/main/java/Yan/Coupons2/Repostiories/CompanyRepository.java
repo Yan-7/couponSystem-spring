@@ -12,6 +12,8 @@ public interface CompanyRepository extends JpaRepository<Company,Integer> {
     Optional<Company> findByEmailAndPassword(String email, String password);
     List<Company> findByEmail(String email);
 
+    //spring JPA derived methods - how to name method
+
     List<Company> findByName(String name);
 
 }

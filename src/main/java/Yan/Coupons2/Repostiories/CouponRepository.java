@@ -1,5 +1,6 @@
 package Yan.Coupons2.Repostiories;
 
+import Yan.Coupons2.EntityBeans.Category;
 import Yan.Coupons2.EntityBeans.Coupon;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,6 +17,10 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
     List<Coupon> findByCompany_id(int id);
 
     List<Coupon> findByCustomers_id(int id);
+
+    List<Coupon> findByCompany_idAndCategory(int id, Category category);
+
+    List<Coupon> findByCompany_idAndPriceLessThan(int id,double price);
 
     //program crashes because of this list
 //    List<Coupon> findByExpirationAfter(Date date);

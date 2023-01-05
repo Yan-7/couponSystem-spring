@@ -13,18 +13,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-
-// TODO: 21/12/2022
-//@ToString(exclude = "coupons") - super problematic -
-//off- problems for adminService
-// on - problems for companyService
+@ToString(exclude = "coupons")
 @Entity
 public class Company {
 
-    //@GeneratedValue(strategy = GenerationType.IDENTITY) -
-    // creates problem with the id's,
-    // i need to control them for functions the get clientID (delete company)
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
 
@@ -38,6 +31,7 @@ public class Company {
 
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+
     private List<Coupon> coupons;
 
 
@@ -47,9 +41,9 @@ public class Company {
     }
 
     // TODO: 19/12/2022  does it works?
-//    public void deleteCouponsList() {
-//        coupons.clear();
-//    }
+    public void deleteCouponsList() {
+        coupons.clear();
+    }
 
 }
 

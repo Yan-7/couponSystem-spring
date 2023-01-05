@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -46,41 +45,42 @@ public class CompanyService extends ClientService {
     }
 
     public void addCoupon(Coupon coupon) {
-        if(couponRepository.findByDescriptionAndCompany_Id(coupon.getDescription(), this.company.getId()).isEmpty()){
+        if (couponRepository.findByDescriptionAndCompany_Id(coupon.getDescription(), this.company.getId()).isEmpty()) {
             company = this.companyRepository.findById(company.getId()).orElseThrow();
-            if(coupon.getStartDate().isBefore(coupon.getEndDate()) && coupon.getEndDate().isAfter(LocalDate.now())) {
+            if (coupon.getStartDate().isBefore(coupon.getEndDate()) && coupon.getEndDate().isAfter(LocalDate.now())) {
                 company.addCouponToCompany(coupon);
                 companyRepository.save(company);
-                System.out.println("Coupon " + coupon.getId()+ " added");
-            }else {
+                System.out.println("Coupon " + coupon.getId() + " added");
+            } else {
                 System.out.println("addCoupon failed - can't add coupon with these dates");
             }
-        }else {
+        } else {
             System.out.println("addCoupon failed - coupon is already in the company DB");
         }
     }
 
-    public void updateCoupon(Coupon coupon) throws CouponsException {
+    public void updateCoupon(Coupon coupon) {
         if (!couponRepository.findByIdAndCompany_id(coupon.getId(), company.getId()).isEmpty()) {
             couponRepository.save(coupon);
-            System.out.println("coupon "+ coupon.getId() + " updated");
+            System.out.println("coupon " + coupon.getId() + " updated");
         } else {
-            throw new CouponsException("coupon was not found, cannot update");
+            System.out.println("coupon was not found, cannot update");
         }
     }
 
     public void deleteCoupon(int couponID) throws CouponsException {
         if (couponRepository.existsById(couponID)) {
             couponRepository.deleteById(couponID);
-            System.out.println("coupon " + couponID+ " deleted");
+            System.out.println("coupon " + couponID + " deleted");
         } else {
             throw new CouponsException("coupon was not found, cannot delete");
         }
     }
 
     public List<Coupon> getCompanyCoupons() {
-        List<Coupon> companyCoupons = company.getCoupons();
-        for (Coupon c:companyCoupons) {
+        List<Coupon> companyCoupons = this.couponRepository.findByCompany_id(company.getId());
+
+        for (Coupon c : companyCoupons) {
             System.out.println(c);
         }
         System.out.println("---------");
@@ -88,33 +88,25 @@ public class CompanyService extends ClientService {
     }
 
     public List<Coupon> getCompanyCouponsByCategory(Category category) {
-        List<Coupon> allCompanyCoupons = company.getCoupons();
-        for (Coupon c : allCompanyCoupons) {
-            if (c.getCategory() != category) {
-                allCompanyCoupons.remove(c);
-            }
-            //company coupons that only belong to the category:\
-        }
-        System.out.println("--------");
-        return allCompanyCoupons;
+
+        List<Coupon> companyCouponsByCategory = couponRepository.findByCompany_idAndCategory(company.getId(), category);
+        return companyCouponsByCategory;
     }
 
     public List<Coupon> getCompanyCouponsByMaxPrice(int maxPrice) {
-        List<Coupon> companyCoupons = company.getCoupons();
-        for (Coupon c : companyCoupons) {
-            if (c.getPrice() > maxPrice) {
-                companyCoupons.remove(c);
-            }
-        }
-        System.out.println("coupons by price:");
-        return companyCoupons;
+        List<Coupon> couponsListByPrice = couponRepository.findByCompany_idAndPriceLessThan(company.getId(), 150);
+        return couponsListByPrice;
     }
 
-    // TODO: 14/12/2022 good?
-    public String getCompanyDetails() {
-        System.out.println("company details:");
-        return company.toString();
-
+    // TODO: not working
+    public Company getCompanyDetails() {
+        Optional<Company> companyOpt = companyRepository.findById(this.company.getId());
+        if (companyOpt.isPresent()) {
+            this.company = companyOpt.get();
+            return company;
+        }
+        System.out.println("company not found");
+        return null;
     }
 
 

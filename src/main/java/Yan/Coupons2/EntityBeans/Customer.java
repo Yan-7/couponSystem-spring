@@ -13,14 +13,14 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
+
 @ToString(exclude = "coupons")
+
 
 public class Customer {
 
     @Id
-    //problematic - perhaps cancel
-
-//    @GeneratedValue(strategy = GenerationType.IDENTITY) - creating auto keys is not good
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String firstName;
     private String LastName;
@@ -35,6 +35,8 @@ public class Customer {
             inverseJoinColumns = @JoinColumn(name="coupon_id")
     )
 
+    //admin service test:
+//    failed to lazily initialize a collection of role: Yan.Coupons2.EntityBeans.Customer.coupons: could not initialize proxy - no Session
     private List<Coupon> coupons;
 
     public void addCouponToCustomer(Coupon coupon) {
@@ -42,6 +44,6 @@ public class Customer {
             this.coupons = new ArrayList<>();
         }
         coupons.add(coupon);
-
+//        System.out.println(coupons); //for testing only
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public class Coupon {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY) - creates problems
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Enumerated (EnumType.ORDINAL)

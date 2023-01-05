@@ -22,33 +22,37 @@ public class LoginManager {
     private CustomerService customerService;
 
     public ClientService login(String email, String password, ClientType clientType) {
-        ClientService login;
-        switch(clientType) {
+        ClientService clientService;
+        switch (clientType) {
             case Admin:
-                login = getAdminService();
-                if(login.login(email, password)) {
-                    return login;
-                }else {
+                clientService = getAdminService();
+                if (clientService.login(email, password)) { //this part makes the "login" in the service true/false
+                    return clientService;
+                } else {
+                    System.out.println("could not connect as admin");
                     return null;
                 }
             case Company:
-                login = getCompanyService();
-                if(login.login(email, password)) {
-                    return login;
-                }else {
+                clientService = getCompanyService();
+                if (clientService.login(email, password)) {
+                    return clientService;
+                } else {
+                    System.out.println("could not connect as company");
                     return null;
                 }
             case Customer:
-                login = getCustomerService();
-                if(login.login(email, password)) {
-                    return login;
-                }else {
+                clientService = getCustomerService();
+                if (clientService.login(email, password)) {
+                    return clientService;
+                } else {
+                    System.out.println("could not connect as customer");
                     return null;
                 }
             default:
                 return null;
         }
     }
+
     public AdminService getAdminService() {
         return adminService;
     }
@@ -67,7 +71,6 @@ public class LoginManager {
         Company,
         Customer
     }
-
 
 
 }

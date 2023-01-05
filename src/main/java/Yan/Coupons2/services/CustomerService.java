@@ -33,8 +33,8 @@ public class CustomerService extends ClientService {
         Optional<Customer> customerOptional = customerRepository.findByEmailAndPassword(email, password);
         if (customerOptional.isPresent()) {
             customer = customerOptional.get();
-
-            System.out.println( customer+ " is logged in the system    ------------------------------>");
+            System.out.println( customer.getFirstName()+ " "+customer.getLastName()+ " is logged in the system    ------------------------------>");
+            System.out.println();
             return true;
         }
         System.out.println("login failed, customer was not found");
@@ -49,12 +49,12 @@ public class CustomerService extends ClientService {
                 this.customer = this.customerRepository.save(customer);
                 customer.addCouponToCustomer(coupon);
                 coupon.setAmount(coupon.getAmount()-1);
-                System.out.println("coupon purchased by customer");
+                System.out.println("coupon " + coupon.getId()+" purchased by " + customer.getFirstName());
             }
         } else throw new CouponsException("coupon was not sold to customer");
     }
 
-    // TODO: 14/12/2022 need this this.customer?
+    // TODO: 22/12/2022 creating problems a customer test
     public List<Coupon> getCustomerCouponsByCategory(Category category) {
         List<Coupon> customerCoupons = customer.getCoupons();
         for (Coupon c : customerCoupons) {
@@ -62,11 +62,16 @@ public class CustomerService extends ClientService {
                 customerCoupons.remove(c);
             }
         }
+        System.out.println(category);
         return customerCoupons;
     }
 
     public List<Coupon> getCustomerCouponsByMaxPrice(double maxPrice) {
         List<Coupon> customerCoupons = this.customer.getCoupons();
+        if (customerCoupons.isEmpty()) {
+            System.out.println("customer coupons list is empty");
+            return null;
+        }
         for (Coupon c : customerCoupons) {
             if (c.getPrice() > maxPrice) {
                 customerCoupons.remove(c);

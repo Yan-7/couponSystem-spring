@@ -1,11 +1,15 @@
 package Yan.Coupons2.jobDaily;
 
-public class CouponExpireDaily implements Runnable {
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
 
+@Component
+public class CouponExpireDaily  {
 
-    @Override
-    public void run() {
+    @Scheduled(timeUnit = TimeUnit.SECONDS,fixedRate = 3)  //every 3 seconds
+    public void myRun() {
         System.out.println("starting to check expired coupons");
 
     }
